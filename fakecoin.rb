@@ -2,6 +2,8 @@ class Fakecoin < Formula
   homepage "https://fakco.in/"
   url "https://github.com/Fake-Coin/FakeCoin-Qt.git"
 
+  option "with-qt", "Build `fakecoin-qt` binary"
+
   #head do
   depends_on "autoconf" => :build
   depends_on "automake" => :build
@@ -16,6 +18,14 @@ class Fakecoin < Formula
   depends_on "openssl"
   depends_on "zeromq"
 
+  depends_on "qt5" => :optional
+  if build.with? "qt"
+    depends_on "qt5"
+    depends_on "protobuf"
+    depends_on "qrencode"
+    depends_on "gettext" => :optional
+  end
+
   needs :cxx11
 
   def install
@@ -24,12 +34,24 @@ class Fakecoin < Formula
        ENV.delete("SDKROOT")
     end
 
+    args = %w[
+      --disable-dependency-tracking
+      --disable-silent-rules
+    ]
+
+    args << "--with-boost-libdir=#{Formula["boost"].opt_lib}"
+    args << "--prefix=#{prefix}"
+
+    if build.with? "qt"
+      args << "--with-gui=auto"
+      ENV.append "CXXFLAGS", "-std=c++11 -stdlib=libc++"
+      ENV.append "OBJCXXFLAGS", "-std=c++11 -stdlib=libc++"
+    end
+
     system "./autogen.sh" # if build.head?
-    system "./configure", "--disable-dependency-tracking",
-                          "--disable-silent-rules",
-                          "--with-boost-libdir=#{Formula["boost"].opt_lib}",
-                          "--prefix=#{prefix}"
+    system "./configure", *args
     system "make", "install"
+
     pkgshare.install "share/rpcuser"
   end
 
