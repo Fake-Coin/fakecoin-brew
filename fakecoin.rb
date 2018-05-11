@@ -16,7 +16,7 @@ class Fakecoin < Formula
 
   depends_on "pkg-config" => :build
   depends_on "berkeley-db@4"
-  depends_on "boost@1.59"
+  depends_on "boost@1.60"
   depends_on "libevent"
   depends_on "miniupnpc"
   depends_on "openssl"
@@ -24,7 +24,7 @@ class Fakecoin < Formula
 
   if build.with? "qt"
     depends_on "qt"
-    depends_on "protobuf@2.6"
+    depends_on "protobuf"
     depends_on "qrencode"
   end
 
@@ -41,7 +41,7 @@ class Fakecoin < Formula
       --disable-silent-rules
     ]
 
-    args << "--with-boost-libdir=#{Formula["boost"].opt_lib}"
+    args << "--with-boost-libdir=#{Formula["boost@1.60"].opt_lib}"
     args << "--prefix=#{prefix}"
 
     if build.with? "qt"
