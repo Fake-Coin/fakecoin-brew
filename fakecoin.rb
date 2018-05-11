@@ -1,6 +1,10 @@
 class Fakecoin < Formula
   homepage "https://fakco.in/"
-  url "https://github.com/Fake-Coin/FakeCoin-Qt.git"
+  version "v0.13.3-rc1"
+  url "https://github.com/Fake-Coin/FakeCoin-qt/archive/fakecoin-0.13.3-rc1.tar.gz"
+  sha256 "c09cde5d7dcaa3ab3446f1b7bdc1925b062e5f43f065a029638d4d95df808753"
+
+  head "https://github.com/Fake-Coin/FakeCoin-Qt.git", :branch => "fakecoin-0.13"
 
   option "with-qt", "Build `fakecoin-qt` binary"
 
@@ -12,18 +16,16 @@ class Fakecoin < Formula
 
   depends_on "pkg-config" => :build
   depends_on "berkeley-db@4"
-  depends_on "boost"
+  depends_on "boost@1.59"
   depends_on "libevent"
   depends_on "miniupnpc"
   depends_on "openssl"
   depends_on "zeromq"
 
-  depends_on "qt5" => :optional
   if build.with? "qt"
-    depends_on "qt5"
-    depends_on "protobuf"
+    depends_on "qt"
+    depends_on "protobuf@2.6"
     depends_on "qrencode"
-    depends_on "gettext" => :optional
   end
 
   needs :cxx11
