@@ -4,7 +4,7 @@ class Fakecoin < Formula
   url "https://github.com/Fake-Coin/FakeCoin-qt/archive/fakecoin-0.13.3-rc1.tar.gz"
   sha256 "c09cde5d7dcaa3ab3446f1b7bdc1925b062e5f43f065a029638d4d95df808753"
 
-  head "https://github.com/Fake-Coin/FakeCoin-Qt.git", :branch => "fakecoin-0.13"
+  head "https://github.com/Fake-Coin/FakeCoin-Qt.git", :branch => "fakecoin-0.15"
 
   option "with-qt", "Build `fakecoin-qt` binary"
 
